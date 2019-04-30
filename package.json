@@ -1,4 +1,17 @@
 {
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "nodemonConfig": {
+    "restartable": "rs",
+    "ignore": [
+      "node_modules/**/node_modules"
+    ]
+  },
+  "env": {
+    "NODE_ENV": "development",
+    "PORT": "3000"
+  },
   "dependencies": {
     "body-parser": "^1.19.0",
     "eslint": "^5.16.0",
@@ -7,5 +20,11 @@
     "express": "^4.16.4",
     "mongoose": "^5.5.4",
     "nodemon": "^1.18.11"
-  }
+  },
+  "name": "fullstack",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:JBoku8/fullstack.git",
+  "author": "jboku8 <m.prog@yahoo.com>",
+  "license": "MIT"
 }
