@@ -11,8 +11,6 @@ function routes(Book){
 
 
     bookRouter.use('/books/:id', (req, res, next) => {
-       
-        
         Book.findById(req.params.id, (err, book) => {
             if(err){
                 return res.send(err);
@@ -33,11 +31,30 @@ function routes(Book){
         book.links.filterBy = `http://${req.headers.host}/api/books/?genre=${genre}`;
         return res.json(book);
     })
-    .put((req, res) => {
-        return res.json("PUT")
+    .put( (req, res) => {
+        const book = { req }
+        
+        book.title = req.body.title;
+        book.author = req.body.author;
+        book.genre  = req.body.genre;
+        book.read = req.body.read;
+
+        
+        req.book.update( (err) => {
+            if( err ) {
+                return res.send(err);
+            }
+
+            return res.send(req.book.toJSON());
+        });
     })
     .delete(( req, res) => {
-        return res.json("delete")
+        req.book.remove(err => {
+            if( err ){
+                return res.send(err);
+            }
+            return res.sendStatus(204);
+        })
     })
 
 

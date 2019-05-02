@@ -31,7 +31,9 @@ app.use(bodyParser.urlencoded({extended:true}))
 app.use('/api', bookRouter);
 
 app.get('/', (req, res) => {
-    res.send("Demo API");
+    return res.send("Demo API");
+    // res.sendFile('client/public/index.html');
+
 })
 
 app.server = app.listen(port, () => {
