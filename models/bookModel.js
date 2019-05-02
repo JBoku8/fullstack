@@ -1,4 +1,4 @@
-const mongoose = required('mongoose');
+const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
@@ -17,5 +17,14 @@ const bookSchema = new Schema({
         default: false
     }
 })
+
+/*
+{
+    title: Name,
+    author: Author,
+    genre: Genre,
+    read: false
+}
+*/
 
 module.exports = mongoose.model('Book', bookSchema);

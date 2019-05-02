@@ -2,7 +2,46 @@ const express = require('express');
 const bookController = require('../controllers/booksController')
 
 function routes(Book){
+    const bookRouter = new express.Router();
+    const controller = bookController(Book);
+    
+    bookRouter.route('/books')
+    .get(controller.get)
+    .post(controller.post);
 
+
+    bookRouter.use('/books/:id', (req, res, next) => {
+       
+        
+        Book.findById(req.params.id, (err, book) => {
+            if(err){
+                return res.send(err);
+            }
+            if( book ){
+                req.book = book;
+                return next();
+            }
+            return res.sendStatus(404);
+        })
+    })
+
+    bookRouter.route('/books/:id')
+    .get( (req, res) => {
+        const book = req.book.toJSON();
+        book.links = {};
+        const genre = req.book.genre.replace(" ", "%20");
+        book.links.filterBy = `http://${req.headers.host}/api/books/?genre=${genre}`;
+        return res.json(book);
+    })
+    .put((req, res) => {
+        return res.json("PUT")
+    })
+    .delete(( req, res) => {
+        return res.json("delete")
+    })
+
+
+    return bookRouter;
 }
 
 module.exports = routes;
